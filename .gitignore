@@ -1,9 +1,9 @@
 /import/*.txt
-/import/*.log
-/import/*.db
 /import/*.cfg
 **/__pycache__/
 /debug/*
+*.db
+*.log
 *.csv
 *.tsv
 *.p

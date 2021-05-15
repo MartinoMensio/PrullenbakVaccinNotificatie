@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container">
+		<br>
+		<h2>Meldingen voor prullenbakvaccin.nl in mijn omgeving ontvangen</h1>
+		<p><b>Wij zijn niet onderdeel van</b> <a href="https://www.prullenbakvaccin.nl">prullenbakvaccin.nl</a>. Lees eerst goed die website door voordat u zich hier aanmeldt.<br>
+		Wij sturen u een email als er een vaccin binnen 20km beschikbaar is op prullenbakvaccin.nl </p>
+		<form action="" method="post">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-3">
+						<label for="region" class="form-label mt-4">Plaatsnaam</label>
+						<input class="form-control" id="region" placeholder="Utrecht..." type="text" size="32" name="region" {% if region %}value="{{region}}"{% endif %} autofocus>
+					</div>
+					<div class="col-md-4">
+						<label for="email" class="form-label mt-4">Email adres</label>
+						<input class="form-control" id="email" placeholder="Email" type="text" size="32" name="email" {% if email %}value="{{email}}"{% endif %}>
+						<small id="emailHelp" class="form-text text-muted">Uw email wordt automatisch verwijderd als prullenbakvaccin.nl stopt of als u zich afmeldt.</small>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<button type="submit" class="btn btn-primary">Aanmelden</button>
+				</div>
+				
+				{% if capt %}
+					{{capt.get_code()|safe}}
+				{% endif %}
+			</div>
+		</form><br>
+		{% if error %}
+		<div class="col-md-6">
+			<div class="alert alert-dismissible alert-danger">
+			  <strong>Niet gelukt:</strong> {{ error }}
+			 </div>
+		</div>
+		{% endif %}
+		{% if success %}
+		<div class="col-md-6">
+			<div class="alert alert-dismissible alert-success">
+			  <strong>U bent aangemeld.</strong> Uitschrijven kan via de link onder aan de mail.
+			</div>
+		 </div>
+		{% endif %}
+	</div>
+{% endblock content %}

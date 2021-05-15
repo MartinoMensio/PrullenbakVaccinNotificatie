@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+<br>
+	{% if error %}
+	<div class="col-md-12">
+		<div class="alert alert-dismissible alert-danger">
+		  <strong>Er ging iets fout bij het uitschrijven.</strong> Neem contact op met y.wilke@protonmail.com
+		 </div>
+	</div>
+	{% endif %}
+	{% if success %}
+	<div class="col-md-12">
+		<div class="alert alert-dismissible alert-success">
+		  Meldingen voor {{email}} zijn uitgeschakeld.
+		</div>
+	 </div>
+	{% endif %}
+</div>
+{% endblock %}
