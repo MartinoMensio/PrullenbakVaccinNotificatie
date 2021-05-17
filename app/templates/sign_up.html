@@ -5,23 +5,31 @@
 		<br>
 		<h2>Meldingen voor prullenbakvaccin.nl in mijn omgeving ontvangen</h1>
 		<p><b>Wij zijn niet onderdeel van</b> <a href="https://www.prullenbakvaccin.nl">prullenbakvaccin.nl</a>. Lees eerst goed die website door voordat u zich hier aanmeldt.<br>
-		Wij sturen u een email als er een vaccin binnen 20km beschikbaar is op prullenbakvaccin.nl </p>
+		Wij sturen u een email als er een vaccin in de omgeving beschikbaar is op prullenbakvaccin.nl </p>
 		<form action="" method="post">
 			<div class="form-group">
 				<div class="row">
-					<div class="col-sm-3">
-						<label for="region" class="form-label mt-4">Plaatsnaam</label>
-						<input class="form-control" id="region" placeholder="Utrecht..." type="text" size="32" name="region" {% if region %}value="{{region}}"{% endif %} autofocus>
+					<div class="col-sm-2">
+						<label for="postcode" class="form-label mt-4">Postcode</label>
+						<input class="form-control" id="postcode" placeholder="1234AB" type="text" size="6" name="postcode" {% if postcode %}value="{{postcode}}"{% endif %} autofocus>
 					</div>
 					<div class="col-md-4">
 						<label for="email" class="form-label mt-4">Email adres</label>
 						<input class="form-control" id="email" placeholder="Email" type="text" size="32" name="email" {% if email %}value="{{email}}"{% endif %}>
 						<small id="emailHelp" class="form-text text-muted">Uw email wordt automatisch verwijderd als prullenbakvaccin.nl stopt of als u zich afmeldt.</small>
 					</div>
+					<div class="col-sm-2">
+						<label for="max_dist" class="form-label mt-4">Max afstand</label>
+							<select class="form-select" name="max_dist" id="max_dist">
+								<option value="5km">5km</option>
+								<option selected value="10km">10km</option>
+								<option value="15km">15km</option>
+							</select>
+					</div>
 				</div>
-				<div class="col-sm-2">
-					<button type="submit" class="btn btn-primary">Aanmelden</button>
-				</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-primary">Aanmelden</button>
+					</div>
 				
 				{% if capt %}
 					{{capt.get_code()|safe}}
@@ -42,5 +50,16 @@
 			</div>
 		 </div>
 		{% endif %}
+		<h3>Meer informatie:</h3>
+		<p><b>Ik heb een vraag over…</b><br>
+		Dan kunt u het beste kijken op <a href="https://www.prullenbakvaccin.nl">prullenbakvaccin.nl</a>. Wij staan los van prullenbakvaccin.nl en sturen alleen een melding als er iets beschikbaar is op de site.<br><br>
+		<b>Vragen of feedback over deze website?</b><br>
+		U kunt contact met ons opnemen door een mail te sturen naar dev.yanowilke@gmail.com<br><br>
+		<b>Ik wil geen emails meer ontvangen.</b><br>
+		In de mail vindt u een link om u uit te schrijven. Uw gegevens worden dan ook automatisch verwijderd. Wij zullen uw gegevens nooit voor commerciële doeleinden gebruiken.<br><br>
+		<b>Hoe werkt deze website?</b><br>
+		Wij houden automatisch prullenbakvaccin.nl in de gaten of er vaccins beschikbaar komen. Wij gebruiken dan uw postcode om te kijken of het bij u in de buurt is en sturen u dan een email. Alles is in Python geschreven en de code is openbaar op <a href="https://github.com/ywilke/PrullenbakVaccinNotificatie">github</a>.<br>
+		</p>
+		
 	</div>
 {% endblock content %}
