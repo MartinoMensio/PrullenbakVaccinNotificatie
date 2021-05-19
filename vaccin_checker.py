@@ -321,7 +321,7 @@ db_file = "vaccin_users.db"
 wait_time = 120 # sec
 max_per_loc = 70
 
-test_run = True
+test_run = False
 
 # Global vars
 bwnr_API_KEY = os.environ.get("bwnr_API_KEY", default=None)
