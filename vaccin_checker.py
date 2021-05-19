@@ -41,7 +41,7 @@ def log_var(var):
 
 
 def parse_site():
-    postcode_regex = "[\d]{4}[A-Z]{2}"
+    postcode_regex = "[\d]{4}( |)[A-Za-z]{2}( |)"
     now_avail = {}
     
     r = requests.get("https://www.prullenbakvaccin.nl/")
@@ -77,6 +77,7 @@ def parse_site():
             log_var(locatie_text)
             return {}
         postcode = match.group(0)
+        postcode = postcode.replace(" ", "").upper()
         now_avail[locatie_id] = {"postcode": postcode, "html_card": elem}
         write_log(f"{locatie_id} is available at {postcode}")
     return now_avail
