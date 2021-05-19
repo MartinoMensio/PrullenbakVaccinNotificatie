@@ -1,0 +1,9 @@
+flask
+Flask-Bootstrap
+requests
+validate_email
+flask_recaptcha
+python-dotenv
+redis
+beautifulsoup4
+uwsgi

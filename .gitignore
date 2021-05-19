@@ -1,3 +1,5 @@
+venv/**
+.env
 **/__pycache__/
 /debug/*
 *.db
@@ -5,3 +7,4 @@
 *.csv
 *.tsv
 *.p
+!/**/.gitkeep

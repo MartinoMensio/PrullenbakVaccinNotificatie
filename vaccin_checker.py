@@ -14,6 +14,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from bs4 import BeautifulSoup
 
+import dotenv
+dotenv.load_dotenv()
 
 def timestamp():
     stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
