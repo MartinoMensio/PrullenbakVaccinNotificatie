@@ -244,9 +244,13 @@ def notify_users(loc, context):
         mail_service = recommend_mail_service(mail_service)
         message = format_message(entry, loc)
         try:
-            time.sleep(1) #TODO variable time per mail service
+            start_time = datetime.datetime.now() # Log start time
             servers[mail_service].sendmail(from_address, entry[0], message.as_string())
             update_redis(mail_service)
+            loop_time = int((datetime.datetime.now() - start_time).total_seconds()) # Time how long loop took
+            remaining = MS[mail_service]["sleep"] - loop_time # How long to wait for consistant loop time
+            if remaining > 0:
+                time.sleep(remaining) #variable sleep time per mail service
         except Exception as E:
             write_log(f"Exception while sending mail, update redis: {E}", is_error=True)
     write_log("emails for location send")
@@ -310,9 +314,9 @@ def main():
 
 
 # Email services
-MS = {"sendinblue": {"smtp": "smtp-relay.sendinblue.com", "port": 587, "user": os.environ.get("sendinblue_USER"), "pass": os.environ.get("sendinblue_PASS")},
-      "mailjet": {"smtp": "in-v3.mailjet.com", "port": 587, "user": os.environ.get("mailjet_USER"), "pass": os.environ.get("mailjet_PASS")},
-      "aws": {"smtp": "email-smtp.us-east-2.amazonaws.com", "port": 587, "user": os.environ.get("aws_USER"), "pass": os.environ.get("aws_PASS")},
+MS = {"sendinblue": {"smtp": "smtp-relay.sendinblue.com", "port": 587, "user": os.environ.get("sendinblue_USER"), "pass": os.environ.get("sendinblue_PASS"), "sleep": 0.2},
+      "mailjet": {"smtp": "in-v3.mailjet.com", "port": 587, "user": os.environ.get("mailjet_USER"), "pass": os.environ.get("mailjet_PASS"), "sleep": 0.5},
+      "aws": {"smtp": "email-smtp.us-east-2.amazonaws.com", "port": 587, "user": os.environ.get("aws_USER"), "pass": os.environ.get("aws_PASS"), "sleep": 0.2},
       }
 
 # Setup vars

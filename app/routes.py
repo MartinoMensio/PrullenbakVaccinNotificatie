@@ -29,6 +29,11 @@ def write_log(message, also_print=False, is_error = False):
     if also_print == True:
         print(message)
 
+      
+def log_new_user(unix_time, postcode, ip, email, token):
+    with open('debug/users.log','a') as debug_f:
+        debug_f.write(f"{unix_time}\t{postcode}\t{ip}\t{email}\t{token}\n")
+
 
 def get_ip():
     '''Return ip of user'''
@@ -116,6 +121,7 @@ def add_email(postcode, email, max_dist, token, conn):
         return "Iets ging mis. Probeer het opnieuw."
     return True
 
+
 # Setup vars
 db_file = "vaccin_users.db"
 dist_dict = {"5km": 6000, "10km": 11000, "15km": 16000}
@@ -135,6 +141,7 @@ create_table(db_file)
 def root_page():
     return redirect("/PrullenbakVaccin/aanmelden")
 
+
 @app.route('/PrullenbakVaccin/aanmelden', methods=['POST', 'GET'])
 def signup_page():
     ip = get_ip()
@@ -153,8 +160,9 @@ def signup_page():
     if inserted != True:
         return render_template('sign_up.html', postcode=postcode, email=email, error=inserted)
     elif inserted == True:
-        log_dict = {"ip": ip, "email": email, "token": token, "postcode": postcode}
-        write_log(f"New user: {log_dict}")
+        write_log("New user signed-up")
+        unix_time = int(time.time())
+        log_new_user(unix_time, postcode, ip, email, token)
         return render_template('sign_up.html', postcode=postcode, email=email, success=True)
 
 
@@ -169,9 +177,11 @@ def unsub():
             user_id = (hit[0],)
             try:
                 cur.execute("""DELETE FROM users WHERE users.user_id IS ?""", (user_id))
+                write_log(f"Unsubbed: {email} {token}")
                 return render_template('unsub.html', email=email, success=True)
             except Exception as e:
                 write_log(f"Exception while removing email: {e}", is_error=True)
+                return render_template('unsub.html', email=email, error=True)
         else: # Email or token not found
             write_log(f"No hit on unsub: {email} {token}", is_error=True)
             return render_template('unsub.html', email=email, error=True)
