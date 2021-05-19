@@ -160,6 +160,7 @@ def signup_page():
     if inserted != True:
         return render_template('sign_up.html', postcode=postcode, email=email, error=inserted)
     elif inserted == True:
+        postcode = valid_postcode(postcode)
         write_log("New user signed-up")
         unix_time = int(time.time())
         log_new_user(unix_time, postcode, ip, email, token)
