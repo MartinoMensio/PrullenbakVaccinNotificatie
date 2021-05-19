@@ -176,6 +176,9 @@ def login_mail_servers(context, is_test = False):
 
 
 def recommend_mail_service(mail_service):
+    if test_run == True:
+        return test_mail_service
+    
     if mail_service == "sendinblue":
         if len(R.keys(f"sendinblue:24h:*")) > 280 or len(R.keys(f"sendinblue:1h:*")) > 90:
             write_log("sendinblue is near limit switching")
@@ -325,7 +328,9 @@ db_file = "vaccin_users.db"
 wait_time = 120 # sec
 max_per_loc = 70
 
+# Testings vars
 test_run = False
+test_mail_service = "sendinblue"
 
 # Global vars
 bwnr_API_KEY = os.environ.get("bwnr_API_KEY", default=None)
